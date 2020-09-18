@@ -18,4 +18,20 @@ function obtenerPosts($limite)
     $db->close();
 }
 
+function obtenerPostPorId($id)
+{
+	$db = new Database();
+    $consulta = "SELECT titulo, imagen, categoria, fecha_de_creacion, contenido FROM posts WHERE id LIKE " . $id;
+    $resultado = $db->query($consulta);
+    if(!$resultado)
+    {
+        echo "No existe post";
+    }
+    else
+    {
+        return $resultado;
+    }
+    $db->close();
+}
+
 ?>
