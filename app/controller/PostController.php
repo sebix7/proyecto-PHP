@@ -23,11 +23,11 @@ function obtenerPostPorId($id)
 {
     if(!is_numeric($id))
     {
-        echo "Por favor introduzca un ID";
+        echo "Error - Por favor ingrese un número";
         exit();
     }
 	$db = new Database();
-    $consulta = "SELECT titulo, imagen, categoria, fecha_de_creacion, contenido FROM posts WHERE id LIKE " . $id;
+    $consulta = "SELECT * FROM posts WHERE id LIKE " . $id;
     $resultado = $db->query($consulta);
     if(!$resultado)
     {
@@ -47,12 +47,20 @@ function subirPost($titulo, $contenido, $imagen_tmp, $imagen_name, $categoria, $
     {
         $db = new Database();
         $insert = "INSERT INTO posts (titulo, contenido, imagen, categoria, fecha_de_creacion) VALUES ('$titulo', '$contenido', '$imagen_name' , '$categoria', '$fecha_de_creacion')";
-        $db->insert($insert);
+        $db->query2($insert);
         $db->close();
     }
-    else
+}
+
+function actualizarPost($titulo, $contenido, $imagen_tmp, $imagen_name, $categoria, $fecha_de_creacion, $imagenPorBorrar, $id)
+{
+    unlink("../images/" . $imagenPorBorrar);
+    if(move_uploaded_file($imagen_tmp, "../images/" . $imagen_name))
     {
-        echo "No funca";
+        $db = new Database();
+        $update = "UPDATE posts SET titulo='$titulo', contenido='$contenido', imagen='$imagen_name', categoria='$categoria', fecha_de_creacion='$fecha_de_creacion' WHERE id LIKE " . $id;
+        $db->query2($update);
+        $db->close();
     }
 }
 

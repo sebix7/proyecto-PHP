@@ -32,7 +32,7 @@ class Database{
         return $resultado;
     }
 
-    public function insert($sql)
+    public function query2($sql)
     {        
         mysqli_query($this->conexion, $sql);
     }

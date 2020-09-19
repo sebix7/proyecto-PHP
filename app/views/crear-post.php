@@ -41,7 +41,7 @@
                 </div>
                 <hr>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-dark">Enviar</button>
+                    <button type="submit" class="btn btn-dark mb-3">Crear</button>
                 </div>
             </form>
         </div>

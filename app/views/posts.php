@@ -28,14 +28,21 @@
                 </thead>
                 <tbody>
                     <?php
-                        if(isset($_POST['titulo'])&&isset($_POST['contenido'])&&(isset($_FILES['imagen'])&&$_FILES['imagen']['error']==0)&&isset($_POST['categoria'])&&isset($_POST['fecha_de_creacion']))
+                        if(isset($_POST['titulo'])&&isset($_POST['contenido'])&&(isset($_FILES['imagen'])&&$_FILES['imagen']['error']==0)&&isset($_POST['categoria'])&&isset($_POST['fecha_de_creacion'])&&isset($_POST['imagenPorBorrar'])&&isset($_POST['id']))
+                        {
+                            actualizarPost($_POST['titulo'],$_POST['contenido'],$_FILES['imagen']['tmp_name'],$_FILES['imagen']['name'],$_POST['categoria'],$_POST['fecha_de_creacion'],$_POST['imagenPorBorrar'],$_POST['id']);
+                        }
+                        else if(isset($_POST['titulo'])&&isset($_POST['contenido'])&&(isset($_FILES['imagen'])&&$_FILES['imagen']['error']==0)&&isset($_POST['categoria'])&&isset($_POST['fecha_de_creacion']))
                         {
                             subirPost($_POST['titulo'],$_POST['contenido'],$_FILES['imagen']['tmp_name'],$_FILES['imagen']['name'],$_POST['categoria'],$_POST['fecha_de_creacion']);
                         }
+                        
                         $posts = obtenerPosts(50);
                         $i=1;
                         foreach($posts as $post)
                         {
+                            $fecha = $post['fecha_de_creacion'];
+                            $fechaModificada = date("d/m/Y", strtotime($fecha));
                             echo
                                 "<tr>
                                     <th scope='row'>" . $i++ . "</th>
@@ -43,8 +50,8 @@
                                     <td>" . $post["titulo"] . "</td>
                                     <td><img src='../images/" . $post["imagen"] . "' class='img-fluid'></td>
                                     <td>" . $post["categoria"] . "</td>
-                                    <td>" . $post["fecha_de_creacion"] . "</td>
-                                    <td><a href='editar-post.php?id=" . $post["id"] . "' class='btn btn-primary'>Editar</a></td>
+                                    <td>" . $fechaModificada . "</td>
+                                    <td><a href='editar-post.php?id=" . $post["id"] . "' class='btn btn-primary btn-sm'>Editar</a></td>
                                 </tr>";
                         }
                     ?>
