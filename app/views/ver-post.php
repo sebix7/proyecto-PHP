@@ -1,6 +1,10 @@
 <?php
     include_once("../controller/PostController.php");
-    $id = $_GET["id"];
+    $id = null;
+    if(is_numeric($_GET["id"]))
+    {
+        $id = $_GET["id"];
+    }
 ?>
 
 <!DOCTYPE html>

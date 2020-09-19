@@ -36,7 +36,6 @@
                         {
                             subirPost($_POST['titulo'],$_POST['contenido'],$_FILES['imagen']['tmp_name'],$_FILES['imagen']['name'],$_POST['categoria'],$_POST['fecha_de_creacion']);
                         }
-                        
                         $posts = obtenerPosts(50);
                         $i=1;
                         foreach($posts as $post)

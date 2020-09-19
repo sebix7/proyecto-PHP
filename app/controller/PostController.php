@@ -43,24 +43,74 @@ function obtenerPostPorId($id)
 
 function subirPost($titulo, $contenido, $imagen_tmp, $imagen_name, $categoria, $fecha_de_creacion)
 {
-    if(move_uploaded_file($imagen_tmp, "../images/" . $imagen_name))
+    $resultado = validarExtensionDelArchivo($imagen_name);
+    if(isset($resultado))
     {
+        if(move_uploaded_file($imagen_tmp, "../images/" . $imagen_name))
+        {
         $db = new Database();
         $insert = "INSERT INTO posts (titulo, contenido, imagen, categoria, fecha_de_creacion) VALUES ('$titulo', '$contenido', '$imagen_name' , '$categoria', '$fecha_de_creacion')";
         $db->query2($insert);
         $db->close();
+        }
     }
 }
 
 function actualizarPost($titulo, $contenido, $imagen_tmp, $imagen_name, $categoria, $fecha_de_creacion, $imagenPorBorrar, $id)
 {
-    unlink("../images/" . $imagenPorBorrar);
-    if(move_uploaded_file($imagen_tmp, "../images/" . $imagen_name))
+    $resultado = validarExtensionDelArchivo($imagen_name);
+    if(isset($resultado))
+    {
+        unlink("../images/" . $imagenPorBorrar);
+        if(move_uploaded_file($imagen_tmp, "../images/" . $imagen_name))
+        {
+            $db = new Database();
+            $update = "UPDATE posts SET titulo='$titulo', contenido='$contenido', imagen='$imagen_name', categoria='$categoria', fecha_de_creacion='$fecha_de_creacion' WHERE id LIKE " . $id;
+            $db->query2($update);
+            $db->close();
+        }
+    }
+}
+
+function eliminarPost($id)
+{
+    $resultado = validarIdExistente($id);
+    if($resultado)
     {
         $db = new Database();
-        $update = "UPDATE posts SET titulo='$titulo', contenido='$contenido', imagen='$imagen_name', categoria='$categoria', fecha_de_creacion='$fecha_de_creacion' WHERE id LIKE " . $id;
-        $db->query2($update);
+        $delete = "DELETE FROM posts WHERE id LIKE " . $id;
+        $db->query2($delete);
         $db->close();
+        return true;
+    }
+}
+
+function validarIdExistente($idBuscado)
+{
+    $db = new Database();
+    $consulta = "SELECT id FROM posts";
+    $resultado = $db->query($consulta);
+    if($resultado)
+    {
+        foreach($resultado as $id)
+        {
+            if($idBuscado==$id["id"])
+            {
+                return true;
+            }
+        }
+    }
+    $db->close();
+}
+
+function validarExtensionDelArchivo($imagen_name)
+{
+    $archivo = $imagen_name;
+    $extension = pathinfo($archivo, PATHINFO_EXTENSION);
+    $formatos_permitidos = array (".jpg", ".png", ".gif", ".jpeg");
+    if(in_array($extension, $formatos_permitidos))
+    {
+        return true;
     }
 }
 
