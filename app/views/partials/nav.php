@@ -10,6 +10,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="posts.php">Posts</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="crear-post.php">Crear post</a>
+                    </li>
                 </ul>
             <form class="form-inline my-2 my-lg-0" action="ver-post.php" method="get">
                 <input name="id" class="form-control mr-sm-2" type="search" placeholder="Ingrese ID" aria-label="Search">

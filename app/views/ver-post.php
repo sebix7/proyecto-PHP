@@ -16,7 +16,8 @@
                 "<div class='container-fluid'>
                     <h1 class='h2 mt-3'>ID DEL POST: <strong>" . $id . "</strong></h1>";
             $post = obtenerPostPorID($id);
-            foreach($post as $columna){
+            foreach($post as $columna)
+            {
             echo
                     "<div class='jumbotron text-center bg-light mt-3' style='margin-bottom:0'>
                         <div class='row no-gutters'>

@@ -17,21 +17,29 @@
             <table class="table table-sm mt-3">
                 <thead class="thead-dark">
                     <tr>
-                    <th scope="col" style="text-fluid">ID</th>
-                    <th scope="col" style="text-fluid">Titulo</th>
-                    <th scope="col" style="text-fluid">Imagen</th>
-                    <th scope="col" style="text-fluid">Categoria</th>
-                    <th scope="col" style="text-fluid">Fecha de creación</th>
-                    <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col" style="text-fluid">ID</th>
+                        <th scope="col" style="text-fluid">Titulo</th>
+                        <th scope="col" style="text-fluid">Imagen</th>
+                        <th scope="col" style="text-fluid">Categoria</th>
+                        <th scope="col" style="text-fluid">Fecha de creación</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
+                        if(isset($_POST['titulo'])&&isset($_POST['contenido'])&&(isset($_FILES['imagen'])&&$_FILES['imagen']['error']==0)&&isset($_POST['categoria'])&&isset($_POST['fecha_de_creacion']))
+                        {
+                            subirPost($_POST['titulo'],$_POST['contenido'],$_FILES['imagen']['tmp_name'],$_FILES['imagen']['name'],$_POST['categoria'],$_POST['fecha_de_creacion']);
+                        }
                         $posts = obtenerPosts(50);
-                        foreach($posts as $post){
+                        $i=1;
+                        foreach($posts as $post)
+                        {
                             echo
                                 "<tr>
-                                    <th scope='row'>" . $post["id"] . "</th>
+                                    <th scope='row'>" . $i++ . "</th>
+                                    <td>" . $post["id"] . "</td>
                                     <td>" . $post["titulo"] . "</td>
                                     <td><img src='../images/" . $post["imagen"] . "' class='img-fluid'></td>
                                     <td>" . $post["categoria"] . "</td>

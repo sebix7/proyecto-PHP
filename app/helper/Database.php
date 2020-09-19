@@ -4,7 +4,8 @@ class Database{
 
     private $conexion;
 
-    public function __construct(){
+    public function __construct()
+    {
         $configuracion = parse_ini_file("../config/config.ini");
         $servername = $configuracion["servername"];
         $username = $configuracion["username"];
@@ -14,14 +15,16 @@ class Database{
         $conn = mysqli_connect($servername, $username, $password, $dbname);
 
         // Check connection
-        if (!$conn) {
+        if (!$conn)
+        {
             die("Connection failed: " . mysqli_connect_error());
         }
 
         $this->conexion = $conn;
     }
 
-    public function query($sql){
+    public function query($sql)
+    {
         $result = mysqli_query($this->conexion, $sql);
 
         $resultado = mysqli_fetch_all($result,MYSQLI_ASSOC);
@@ -29,7 +32,13 @@ class Database{
         return $resultado;
     }
 
-    public function close(){
+    public function insert($sql)
+    {        
+        mysqli_query($this->conexion, $sql);
+    }
+
+    public function close()
+    {
         mysqli_close($this->conexion);
     }
 }
