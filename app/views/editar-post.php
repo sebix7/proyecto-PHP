@@ -19,7 +19,7 @@
             foreach($post as $columna)
             {
             echo
-                    "<form action='posts.php' method='POST' enctype='multipart/form-data'>
+                    "<form action='index.php' method='POST' enctype='multipart/form-data'>
                         <div>
                             <div class='form-group'>
                                 <label for='titulo'>Editar titulo:</label>
@@ -33,17 +33,10 @@
                                 <label for='contenido'>Editar contenido:</label>
                                 <textarea class='form-control' id='contenido' name='contenido' required>" . $columna["contenido"] . "</textarea>
                             </div>
-                            <div class='form-group row'>
-                                <div class='col-6'>
-                                    <label>Subir imagen: </label>&nbsp;
-                                    <input type='file' id='imagen' name='imagen' required>
-                                </div>
-                                <div class='col-6'>
-                                    <label for='fecha_de_creacion'>Ingrese fecha de creación:</label>&nbsp;
-                                    <input type='date' id='fecha_de_creacion' name='fecha_de_creacion' value='" . $columna["fecha_de_creacion"] . "' required>
-                                </div>
+                            <div>
+                                <label for='fecha_de_creacion'>Ingrese fecha de creación:</label>&nbsp;
+                                <input type='date' id='fecha_de_creacion' name='fecha_de_creacion' value='" . $columna["fecha_de_creacion"] . "' required>
                             </div>
-                            <input type='hidden' id='imagenPorBorrar' name='imagenPorBorrar' value='" . $columna["imagen"] . "'>
                             <input type='hidden' id='id' name='id' value='" . $columna["id"] . "'>
                             <hr>
                             <div class='text-center'>

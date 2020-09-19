@@ -43,33 +43,21 @@ function obtenerPostPorId($id)
 
 function subirPost($titulo, $contenido, $imagen_tmp, $imagen_name, $categoria, $fecha_de_creacion)
 {
-    $resultado = validarExtensionDelArchivo($imagen_name);
-    if(isset($resultado))
+    if(move_uploaded_file($imagen_tmp, "../images/" . $imagen_name))
     {
-        if(move_uploaded_file($imagen_tmp, "../images/" . $imagen_name))
-        {
-        $db = new Database();
-        $insert = "INSERT INTO posts (titulo, contenido, imagen, categoria, fecha_de_creacion) VALUES ('$titulo', '$contenido', '$imagen_name' , '$categoria', '$fecha_de_creacion')";
-        $db->query2($insert);
-        $db->close();
-        }
+    $db = new Database();
+    $insert = "INSERT INTO posts (titulo, contenido, imagen, categoria, fecha_de_creacion) VALUES ('$titulo', '$contenido', '$imagen_name' , '$categoria', '$fecha_de_creacion')";
+    $db->query2($insert);
+    $db->close();
     }
 }
 
-function actualizarPost($titulo, $contenido, $imagen_tmp, $imagen_name, $categoria, $fecha_de_creacion, $imagenPorBorrar, $id)
+function actualizarPost($titulo, $contenido, $categoria, $fecha_de_creacion, $id)
 {
-    $resultado = validarExtensionDelArchivo($imagen_name);
-    if(isset($resultado))
-    {
-        unlink("../images/" . $imagenPorBorrar);
-        if(move_uploaded_file($imagen_tmp, "../images/" . $imagen_name))
-        {
-            $db = new Database();
-            $update = "UPDATE posts SET titulo='$titulo', contenido='$contenido', imagen='$imagen_name', categoria='$categoria', fecha_de_creacion='$fecha_de_creacion' WHERE id LIKE " . $id;
-            $db->query2($update);
-            $db->close();
-        }
-    }
+    $db = new Database();
+    $update = "UPDATE posts SET titulo='$titulo', contenido='$contenido', categoria='$categoria', fecha_de_creacion='$fecha_de_creacion' WHERE id LIKE " . $id;
+    $db->query2($update);
+    $db->close();
 }
 
 function eliminarPost($id)
@@ -101,17 +89,6 @@ function validarIdExistente($idBuscado)
         }
     }
     $db->close();
-}
-
-function validarExtensionDelArchivo($imagen_name)
-{
-    $archivo = $imagen_name;
-    $extension = pathinfo($archivo, PATHINFO_EXTENSION);
-    $formatos_permitidos = array (".jpg", ".png", ".gif", ".jpeg");
-    if(in_array($extension, $formatos_permitidos))
-    {
-        return true;
-    }
 }
 
 ?>

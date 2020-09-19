@@ -14,7 +14,7 @@
         ?>
         <div class='container-fluid'>
             <h1 class='h2 mt-3'>CREAR NUEVO POST</h1>
-            <form action="posts.php" method="POST" enctype="multipart/form-data">
+            <form action="index.php" method="POST" enctype="multipart/form-data">
                 <div>
                     <div class="form-group">
                         <label for="titulo">Ingrese titulo:</label>
